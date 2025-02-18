@@ -8,6 +8,7 @@ const category = document.getElementById("category");
 const expenseList = document.querySelector("ul");
 const expensesTotal = document.querySelector("aside header h2 ");
 const expensesQuantity = document.querySelector("aside header p span");
+
 // Captura o evento de input para formatar o valor
 amount.oninput = () => {
   // Obtém o valor atual do input e remove os caracteres não numéricos
@@ -96,6 +97,9 @@ function expenseAdd(newExpense) {
     // Adiciona os itens a lista.
     expenseList.append(expenseItem);
 
+    // limpa o formulário para adicionar um novo item
+    formClear();
+
     // Atualiza os totais.
     updateTotals();
   } catch (error) {
@@ -157,4 +161,29 @@ function updateTotals() {
     console.log(error);
     alert("Não foi possível atualizar os totais.");
   }
+}
+
+// Evento que captura  o clique  nos itens da lista.
+expenseList.addEventListener("click", function (event) {
+  // Verifica se o elemento clicado é o ícone de remover.
+  if (event.target.classList.contains("remove-icon")) {
+    // Obtem a li pai do elemento clicado
+    const item = event.target.closest(".expense");
+
+    // Remove o item da lista.
+    item.remove();
+  }
+
+  // Atualiza os totais.
+  updateTotals();
+});
+
+function formClear() {
+  // Limpa os inputs
+  expense.value = "";
+  category.value = "";
+  amount.value = "";
+
+  // Coloca o foco no input de amount
+  expense.focus();
 }
